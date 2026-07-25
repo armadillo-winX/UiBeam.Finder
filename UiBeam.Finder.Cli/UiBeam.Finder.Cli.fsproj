@@ -10,7 +10,7 @@
 	  <VersionPrefix>1.0.0</VersionPrefix>
 	  <VersionSuffix>preview.0</VersionSuffix>
 	  <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
-	  <AssemblyName>ubf</AssemblyName>
+	  <AssemblyName>uibf</AssemblyName>
 	  <PackageId>UiBeam.Finder.Cli</PackageId>
   </PropertyGroup>
 
