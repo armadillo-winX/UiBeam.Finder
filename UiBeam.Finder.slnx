@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="UiBeam.Finder.Cli/UiBeam.Finder.Cli.fsproj" Id="0c22610e-8ff2-4ec3-9722-40b7a7e47d8d" />
+  <Project Path="UiBeam.Finder.Core/UiBeam.Finder.Core.fsproj" />
+</Solution>
