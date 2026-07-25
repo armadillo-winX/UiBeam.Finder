@@ -75,7 +75,7 @@ type Finder(charMatrix: char[][]) =
 
                     // 次に来る文字の座標セット
                     let nextChars = [| 
-                        (ll + 0, lc + 1);  // 横並び
+                        (ll, lc + 1);  // 横並び
                         (ll + 1, lc);      // 縦読み
                         (ll + 1, lc + 1)   // 斜め読み
                         |]
