@@ -23,6 +23,15 @@ type Finder(charMatrix: char[][]) =
         else
             None
 
+    member private this.checkChar (state: int) (c: char) =
+        match state with
+        | 0 -> CharUtil.isU c
+        | 1 -> CharUtil.isI c
+        | 2 -> CharUtil.isBi c
+        | 3 -> CharUtil.isPrlMark c || CharUtil.isI c
+        | 4 -> CharUtil.isMu c
+        |_ -> false
+
     // 再帰的に 'う' に相当する文字のすべての座標を取得して uCharsList に格納
     member private this.getUChars (lineIndex: int) (charIndex: int) =
         if lineIndex < Array.length this.CharMatrix then
@@ -71,52 +80,16 @@ type Finder(charMatrix: char[][]) =
                         (ll + 1, lc + 1)   // 斜め読み
                         |]
 
-                    match state with
-                    | 1 -> 
-                        for (nl, nc) in nextChars do
-                            let next = this.getChar nl nc
-                            match next with
-                            | Some c -> 
-                                if CharUtil.isI c then 
-                                    let nUiBeam = uibeam @ [(nl, nc)]
-                                    nUiBeamList <- nUiBeamList @ [nUiBeam]
-                                else
-                                    ()
-                            | None -> ()
-                    | 2 -> 
-                        for (nl, nc) in nextChars do
-                            let next = this.getChar nl nc
-                            match next with
-                            | Some c -> 
-                                if CharUtil.isBi c then 
-                                    let nUiBeam = uibeam @ [(nl, nc)]
-                                    nUiBeamList <- nUiBeamList @ [nUiBeam]
-                                else
-                                    ()
-                            | None -> ()
-                    | 3 -> 
-                        for (nl, nc) in nextChars do
-                            let next = this.getChar nl nc
-                            match next with
-                            | Some c -> 
-                                if CharUtil.isPrlMark c || CharUtil.isI c then 
-                                    let nUiBeam = uibeam @ [(nl, nc)]
-                                    nUiBeamList <- nUiBeamList @ [nUiBeam]
-                                else
-                                    ()
-                            | None -> ()
-                    | 4 -> 
-                        for (nl, nc) in nextChars do
-                            let next = this.getChar nl nc
-                            match next with
-                            | Some c -> 
-                                if CharUtil.isMu c then 
-                                    let nUiBeam = uibeam @ [(nl, nc)]
-                                    nUiBeamList <- nUiBeamList @ [nUiBeam]
-                                else
-                                    ()
-                            | None -> ()
-                    |_ -> ()
+                    for (nl, nc) in nextChars do
+                        let next = this.getChar nl nc
+                        match next with
+                        | Some c -> 
+                            if this.checkChar state c then 
+                                let nUiBeam = uibeam @ [(nl, nc)]
+                                nUiBeamList <- nUiBeamList @ [nUiBeam]
+                            else
+                                ()
+                        | None -> ()
 
                 uibeamList <- nUiBeamList
                 state <- state + 1
