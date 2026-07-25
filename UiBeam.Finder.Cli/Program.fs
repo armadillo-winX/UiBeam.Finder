@@ -53,7 +53,7 @@ let find (text: string) =
             lineIndex <- lineIndex + 1
         Console.Write("\r\n")
     else
-        printfn "ういビーム検出器はういビームを発見できませんでした．"
+        printfn "ういビーム検出器はういビームを発見できませんでした．\r\n"
 
 // The Main Entry as follow:
 
@@ -73,6 +73,7 @@ while true do
     printfn "テキストファイルのパスを入力:"
 
     let filePath = Console.ReadLine()
+    printfn ""
     if File.Exists(filePath) then
         try
             File.ReadAllText(filePath) |> find
