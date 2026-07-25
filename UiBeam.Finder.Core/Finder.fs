@@ -59,7 +59,7 @@ type Finder(charMatrix: char[][]) =
             // 4 -> ム
             let mutable state = 1
             while state < 5 do
-                // 新しい "ういビーム" の文字セットのリスト
+                // 新しい "ういビーム" の座標セットのリスト
                 let mutable nUiBeamList: ((int*int) list) list = []
                 for uibeam in uibeamList do
                     let (ll, lc) = uibeam.[state-1]
