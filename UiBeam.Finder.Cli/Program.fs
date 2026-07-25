@@ -55,30 +55,40 @@ let find (text: string) =
     else
         printfn "ういビーム検出器はういビームを発見できませんでした．\r\n"
 
+let rec mainLoop () =
+    printfn "テキストファイルのパスを入力 (または :q で終了):"
+
+    let input = Console.ReadLine().Trim()
+    match input.ToLower() with
+    | ":q" -> 
+        0
+    |_ ->
+        printfn ""
+        if File.Exists(input) then
+            try
+                File.ReadAllText(input) |> find
+            with
+            |_ as ex -> printfn "エラー\r\n%s\r\n" ex.Message
+
+            mainLoop()
+        else
+            printfn "ファイル '%s' は存在しません．\r\n" input
+            mainLoop()
+    
+
 // The Main Entry as follow:
+[<EntryPoint>]
+let main args =
+    let assemblyFilePath = Assembly.GetExecutingAssembly().Location
 
-let assemblyFilePath = Assembly.GetExecutingAssembly().Location
+    let appName = FileVersionInfo.GetVersionInfo(assemblyFilePath).ProductName
+    let appVersion = FileVersionInfo.GetVersionInfo(assemblyFilePath).ProductVersion
+    let developerName = FileVersionInfo.GetVersionInfo(assemblyFilePath).CompanyName
 
-let appName = FileVersionInfo.GetVersionInfo(assemblyFilePath).ProductName
-let appVersion = FileVersionInfo.GetVersionInfo(assemblyFilePath).ProductVersion
-let developerName = FileVersionInfo.GetVersionInfo(assemblyFilePath).CompanyName
+    printfn "---------------------------------------------------------------------------"
+    printfn "%s ver.%s" appName appVersion
+    printfn "by %s" developerName
+    printfn "---------------------------------------------------------------------------"
 
-printfn "---------------------------------------------------------------------------"
-printfn "%s ver.%s" appName appVersion
-printfn "by %s" developerName
-printfn "---------------------------------------------------------------------------"
-
-printfn "テキストファイルの文字列からういビームを発見します．"
-while true do
-    printfn "テキストファイルのパスを入力:"
-
-    let filePath = Console.ReadLine()
-    printfn ""
-    if File.Exists(filePath) then
-        try
-            File.ReadAllText(filePath) |> find
-        with
-        |_ as ex -> printfn "エラー\r\n%s\r\n" ex.Message
-    else
-        printfn "ファイル '%s' は存在しません．\r\n" filePath
-
+    printfn "テキストファイルの文字列からういビームを発見します．"
+    mainLoop()
