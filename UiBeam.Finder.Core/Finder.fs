@@ -14,9 +14,9 @@ type Finder(charMatrix: char[][]) =
 
     // 座標から文字を取得
     member private this.getChar (lineIndex: int) (charIndex: int) =
-        if lineIndex < Array.length this.CharMatrix then
+        if lineIndex >= 0 &&  lineIndex < Array.length this.CharMatrix then
             let line = this.CharMatrix.[lineIndex]
-            if charIndex < Array.length line then
+            if charIndex >= 0 && charIndex < Array.length line then
                 Some line.[charIndex]
             else
                 None
