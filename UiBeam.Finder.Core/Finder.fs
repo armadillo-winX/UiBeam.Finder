@@ -78,6 +78,7 @@ type Finder(charMatrix: char[][]) =
                         (ll, lc + 1);  // 横並び
                         (ll + 1, lc);      // 縦読み
                         (ll + 1, lc + 1)   // 斜め読み
+                        (ll + 1, lc - 1)   // 斜め読み
                         |]
 
                     for (nl, nc) in nextChars do
