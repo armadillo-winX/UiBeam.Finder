@@ -108,6 +108,6 @@ let main args =
             1
     else
         printfn "コマンドライン引数が多すぎます．"
-        printfn "%s では，コマンドラインを指定しないか，またはファイルパスをコマンドライン引数として指定可能です．" appName
+        printfn "%s では，コマンドライン引数を指定しないか，またはファイルパスをコマンドライン引数として指定可能です．" appName
         printfn "[例] PS> ./uibf \"D:\\test\\sample.txt\""
         1
