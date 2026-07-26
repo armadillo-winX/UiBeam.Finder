@@ -90,5 +90,24 @@ let main args =
     printfn "by %s" developerName
     printfn "---------------------------------------------------------------------------"
 
-    printfn "テキストファイルの文字列からういビームを発見します．"
-    mainLoop()
+    if args |> Array.length = 0 then
+        printfn "テキストファイルの文字列からういビームを発見します．"
+        mainLoop()
+    else if args |> Array.length = 1 then
+        let filePath = args.[0]
+        if File.Exists(filePath) then
+            try
+                File.ReadAllText(filePath) |> find
+                0
+            with
+            |_ as ex -> 
+                printfn "エラー\r\n%s\r\n" ex.Message
+                1
+        else
+            printfn "ファイル '%s' は存在しません．\r\n" filePath
+            1
+    else
+        printfn "コマンドライン引数が多すぎます．"
+        printfn "%s では，コマンドラインを指定しないか，またはファイルパスをコマンドライン引数として指定可能です．" appName
+        printfn "[例] PS> ./uibf \"D:\\test\\sample.txt\""
+        1
